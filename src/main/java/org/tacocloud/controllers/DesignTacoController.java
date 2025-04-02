@@ -3,10 +3,7 @@ package org.tacocloud.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.tacocloud.Ingredient;
 import org.tacocloud.IngredientType;
 import org.tacocloud.Taco;
@@ -25,8 +22,8 @@ import java.util.stream.Collectors;
 @SessionAttributes("tacoOrder") //  save the order in the session so that it can span multiple requests
 public class DesignTacoController {
 
-@ModelAttribute
-    public void addIngredientToModel(Model model){
+    @ModelAttribute
+    public void addIngredientToModel(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "Flour Tortilla", IngredientType.WRAP),
                 new Ingredient("COTO", "Corn Tortilla", IngredientType.WRAP),
@@ -54,17 +51,24 @@ public class DesignTacoController {
     }
 
     @ModelAttribute(name = "tacoOrder")
-    public TacoOrder order(){
-    return new TacoOrder();
+    public TacoOrder order() {
+        return new TacoOrder();
     }
 
     @ModelAttribute(name = "taco")
-    public Taco taco(){
-    return new Taco();
+    public Taco taco() {
+        return new Taco();
     }
 
     @GetMapping
-    public String showDesignForm(){
-    return "design";
+    public String showDesignForm() {
+        return "design";
+    }
+
+    @PostMapping
+    public String processDesignForm(Taco taco, @ModelAttribute TacoOrder tacoOrder) {
+        tacoOrder.addTaco(taco);
+        log.info("Processing taco: {}", taco);
+        return "redirect:/orders/current";
     }
 }
