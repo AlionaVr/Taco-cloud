@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>Taco Cloud</title>
     <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <style> .validationError {
+        color: #c62323;
+        font-weight: bold;
+    }
+    </style>
 </head>
 <body>
 <form method="POST" th:action="@{/orders}" th:object="${tacoOrder}">
@@ -20,35 +25,59 @@
     <h3>Deliver my taco masterpieces to...</h3>
     <label for="deliveryName">Name: </label>
     <input th:field="*{deliveryName}" type="text"/>
+    <span class="validationError"
+          th:errors="*{deliveryName}"
+          th:if="${#fields.hasErrors('deliveryName')}">CC Num Error</span>
     <br/>
 
     <label for="deliveryStreet">Street address: </label>
     <input th:field="*{deliveryStreet}" type="text"/>
+    <span class="validationError"
+          th:errors="*{deliveryStreet}"
+          th:if="${#fields.hasErrors('deliveryStreet')}">CC Num Error</span>
     <br/>
 
     <label for="deliveryCity">City: </label>
     <input th:field="*{deliveryCity}" type="text"/>
+    <span class="validationError"
+          th:errors="*{deliveryCity}"
+          th:if="${#fields.hasErrors('deliveryCity')}">CC Num Error</span>
     <br/>
 
     <label for="deliveryState">State: </label>
     <input th:field="*{deliveryState}" type="text"/>
+    <span class="validationError"
+          th:errors="*{deliveryState}"
+          th:if="${#fields.hasErrors('deliveryState')}">CC Num Error</span>
     <br/>
 
     <label for="deliveryZip">Zip code: </label>
     <input th:field="*{deliveryZip}" type="text"/>
+    <span class="validationError"
+          th:errors="*{deliveryZip}"
+          th:if="${#fields.hasErrors('deliveryZip')}">CC Num Error</span>
     <br/>
 
     <h3>Here's how I'll pay...</h3>
     <label for="ccNumber">Credit Card #: </label>
     <input th:field="*{ccNumber}" type="text"/>
+    <span class="validationError"
+          th:errors="*{ccNumber}"
+          th:if="${#fields.hasErrors('ccNumber')}">CC Num Error</span>
     <br/>
 
     <label for="ccExpiration">Expiration: </label>
     <input th:field="*{ccExpiration}" type="text"/>
+    <span class="validationError"
+          th:errors="*{ccExpiration}"
+          th:if="${#fields.hasErrors('ccExpiration')}">CC Num Error</span>
     <br/>
 
     <label for="ccCVV">CVV: </label>
     <input th:field="*{ccCVV}" type="text"/>
+    <span class="validationError"
+          th:errors="*{ccCVV}"
+          th:if="${#fields.hasErrors('ccCVV')}">CC Num Error</span>
     <br/>
     <input type="submit" value="Submit Order"/>
 </form>
