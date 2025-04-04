@@ -1,6 +1,6 @@
 package org.tacocloud;
 
-public enum IngredientType {
+public enum Type {
     WRAP,
     PROTEIN,
     VEGGIES,

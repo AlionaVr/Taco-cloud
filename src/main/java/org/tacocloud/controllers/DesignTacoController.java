@@ -2,16 +2,17 @@ package org.tacocloud.controllers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.tacocloud.Ingredient;
-import org.tacocloud.IngredientType;
 import org.tacocloud.Taco;
 import org.tacocloud.TacoOrder;
+import org.tacocloud.Type;
+import org.tacocloud.repository.IngredientRepository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,30 +24,25 @@ import java.util.stream.Collectors;
 @RequestMapping("/design")
 @SessionAttributes("tacoOrder") //  save the order in the session so that it can span multiple requests
 public class DesignTacoController {
+    private final IngredientRepository ingredientRepository;
+
+    @Autowired
+    public DesignTacoController(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
+    }
+
 
     @ModelAttribute
     public void addIngredientToModel(Model model) {
-        List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("FLTO", "Flour Tortilla", IngredientType.WRAP),
-                new Ingredient("COTO", "Corn Tortilla", IngredientType.WRAP),
-                new Ingredient("GRBF", "Ground Beef", IngredientType.PROTEIN),
-                new Ingredient("CARN", "Carnitas", IngredientType.PROTEIN),
-                new Ingredient("TMTO", "Diced Tomatoes", IngredientType.VEGGIES),
-                new Ingredient("LETC", "Lettuce", IngredientType.VEGGIES),
-                new Ingredient("CHED", "Cheddar", IngredientType.CHEESE),
-                new Ingredient("JACK", "Monterrey Jack", IngredientType.CHEESE),
-                new Ingredient("SLSA", "Salsa", IngredientType.SAUCE),
-                new Ingredient("SRCR", "Sour Cream", IngredientType.SAUCE)
-        );
-        IngredientType[] ingredientTypes = IngredientType.values();
-        for (IngredientType type : ingredientTypes) {
+        List<Ingredient> ingredients = ingredientRepository.findAll();
+        Type[] ingredientTypes = Type.values();
+        for (Type type : ingredientTypes) {
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
-
         }
     }
 
-    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, IngredientType type) {
+    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
         return ingredients.stream()
                 .filter(x -> x.getType().equals(type))
                 .collect(Collectors.toList());
