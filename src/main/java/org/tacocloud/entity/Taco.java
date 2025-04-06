@@ -1,15 +1,19 @@
-package org.tacocloud;
+package org.tacocloud.entity;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Date;
 import java.util.List;
-@Data
-public class Taco {
 
-    private long id;
+@Data
+@Table
+public class Taco {
+    @Id
+    private Long id;
     private Date createdAt = new Date();
     @NotNull
     @Size(min = 5, max = 20, message = "Name must be at least 5 characters and max 20 characters long")

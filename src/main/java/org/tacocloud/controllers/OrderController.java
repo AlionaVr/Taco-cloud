@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.tacocloud.TacoOrder;
+import org.tacocloud.entity.TacoOrder;
 import org.tacocloud.repository.OrderRepository;
 
 @Controller
