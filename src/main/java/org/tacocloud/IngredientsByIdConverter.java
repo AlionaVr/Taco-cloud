@@ -1,9 +1,9 @@
-package org.tacocloud.repository;
+package org.tacocloud;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import org.tacocloud.Ingredient;
+import org.tacocloud.repository.IngredientRepository;
 
 @Component
 public class IngredientsByIdConverter implements Converter<Long, Ingredient> {

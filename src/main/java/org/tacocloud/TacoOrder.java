@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Data
 public class TacoOrder implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private long id;
     private Date placedAt = new Date();
@@ -28,7 +30,7 @@ public class TacoOrder implements Serializable {
     private  String deliveryZip;
     @CreditCardNumber(message = "Not a valid credit card number")
     private  String ccNumber;
-    @Pattern(regexp = "^(0[1-9]|1[0-2])([\\/])([2-9][0-9])$",
+    @Pattern(regexp = "^(0[1-9]|1[0-2])(/)([2-9][0-9])$",
             message = "Must be formatted MM/YY")
     private  String ccExpiration;
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
@@ -38,5 +40,10 @@ public class TacoOrder implements Serializable {
 
     public void addTaco(Taco taco) {
         orderedTacos.add(taco);
+    }
+
+
+    public List<Taco> getTacos() {
+        return orderedTacos;
     }
 }
